@@ -1,23 +1,27 @@
 from TicTacToe import game
 import Welcome
 
-Welcome.welcome()
 
-result = Welcome.gamemode()
+while True:
 
-Welcome.howabout()
+    Welcome.welcome()
 
-current_game = game()
+    result = Welcome.gamemode()
 
-current_game.settoken()
+    Welcome.howabout()
 
-status = 4
+    current_game = game()
 
+    current_game.settoken()
 
-current_game.createGrid()
+    status = 4
+
+    current_game.createGrid()
     
-current_game.move()
+    current_game.move()
 
-current_game.gameResults()
+    current_game.gameResults()
 
-
+    if current_game.continuePlay() != 'Y':
+        break
+    

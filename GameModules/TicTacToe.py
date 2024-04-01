@@ -5,6 +5,8 @@ from collections import Counter
 class game():
     
     def __init__(self):
+        
+        self.playOn = 'Y'
         self.gameStatus = 4
         self.PlayerAToken = ''
         self.PlayerBToken = ''
@@ -126,3 +128,20 @@ class game():
         
         print(outcomes.get(self.gameStatus))
         return
+    
+    def continuePlay(self):
+        
+        playOn = self.playOn
+        
+        print('Would you like to play another game? Y/N')
+        while True:
+            try:
+                playOn = str(input('->'))
+                if playOn not in ['Y', 'N']:
+                    raise ValueError('Please only return Y or N')
+            except ValueError as e:
+                print(e)
+            else:
+                break
+            self.playOn = playOn
+        return playOn
