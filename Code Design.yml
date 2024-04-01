@@ -1,0 +1,98 @@
+Code Design
+
+Create a Tic Tac Toe
+
+1. - Welcome to TicTacToe
+    1.1 - Print a cool logo
+        1.1.1 - Install pyfiglet
+        1.1.2 - Take Logo text
+        1.1.3 - Generate ASCII logo
+        1.1.4 - Print Logo
+    1.2 - Instantiate Game or Quit
+        1.2.1 - Create object from class Game()
+    1.3 - Print("How about a nice game of thermonuclear war")
+
+
+2. - Allow Player to select Token
+    2.1 - Request player chooses token
+        2.1.1 - Print request "Player A: Please Select a Token X or O"
+    2.2 - Allow Player A to select token
+        2.2.1 - Input for X or O
+            2.2.1.1 - Pass token from str(input()) to player_token
+            2.2.1.2 - Set str input to upper
+        2.2.2 - Validate for correct Token
+            2.2.2.1 - Check player_token is in ['X', 'O']
+        2.2.3 - If not valid then request further input and specify valid inputs
+            2.2.3.1 - Return value Error e
+            2.2.3.2 - Print("Incorrect input: Please select either X or O")
+            2.2.3.4 - Return to 2.2.1
+        2.2.4 - Pass Validated Token to game class for Player A
+            2.2.4.1 - Pass player_token to Game.PlayerAToken()
+        2.2.5 - Print "Player A: "Your token is [Game.PlayerAToken]"
+    2.3 - Confirm Player B is other token
+        2.3.1 - Pass other token to Player B
+         2.3.1.1 - Pass alternate token to Game.PlayerBToken()
+        2.3.2 - Print ""Player B: "Your token is [[Game.PlayerBToken]""
+    2.4 - Start Game
+        2.4.1 - Check if both tokens are valid
+        2.3.2 - If both are valid then initiate game
+            2.3.2.1 - Print "Ready Player One"
+            2.3.2.2 - Initialise Game
+        2.3.3 - If not valid then Fatal Error. 
+            2.3.3.1 - Kill Program and Restart
+
+
+3. - Play TicTacToe
+    3.1 - Display TicTacToe Grid
+        3.1.1 - Create grid object Game.createGrid()
+            3.1.1.1 - Create list range(8)
+            3.1.1.2- Populate gamelist with 1-9
+            3.1.1.3 - Pass to object Game.grid
+        3.1.2 - Display grid via Game.displayGrid()
+    3.2 - Ask Active Player to choose move
+        3.2.1 - Set Game.whoMove to "A"
+        3.2.2 - Call Game.move(whoMove)
+            3.2.2.1 - Print "Player A: Select your move" 
+            3.2.2.2 - Record int(input()) to move
+            3.2.2.3 - If not int then Raise ValueError
+            3.2.2.4 - Return to 3.2.2.1
+    3.3 - Record move
+        3.3.1 - Validate move as valid within Game.Move()
+            3.3.1.1 - if move not in gamelist
+            3.3.1.2 - ValueError 
+            3.3.1.3 - Print "Invalid Move: Please select another move"
+            3.3.1.4 - Return to 3.2
+        3.3.2 - Pass move to gamelist
+            3.3.2.1 - Pass ActivePlayerToken to gamelist.index(move-1)
+    3.4 - Switch active Player
+        3.4.1 - Set Active Player to alternate using Game.SwitchPlayer()
+        3.4.2 - If whoMove = "A" then "B"
+        3.4.3 - Else "B" then "A"
+    3.5 - Display all moves to date
+        3.4.1 Call Game.displayGrid()
+    3.6 - Check whether move was last or winning move
+        3.5.1 - Call Game.State()
+    3.7 - Ask Player B to choose move
+        3.7.1 - Call Game.Move(whoMove)
+    3.8 - Record move
+        3.8.1 - Validate using Game.Move()
+    3.9 - Display all moves to date
+        3.9.1 Call Game.displayGrid()
+    3.10 - Check whether move was last or winning move
+        3.10.1 - Call Game.State()
+        3.10.2 - If Game.state = playing
+            3.10.2.1 - Return to 3.1
+        3.10.3 - If Game.state = Won
+            3.10.3.1 - Print: Player[whoMove] has won
+        3.10.4 - If Game.state = Draw
+            3.10.4.1 - Print: No one ever really wins
+
+4.  Quit or return to Welcome screen
+    4.1 - Print "Play again? Y/N"
+        4.1.1 - If Y then Return to 1
+
+            4.1.1.1 - Str(input).upper in [Y,N]
+            4.1.1.2 - If not in list then Raise ValueError
+        4.1.2 - If N then Exit
+            4.1.2.1 - Str(input).upper in[Y,N]
+            4.1.2.2 - If not in list then Raise ValueError
