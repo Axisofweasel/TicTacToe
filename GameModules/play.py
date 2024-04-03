@@ -4,13 +4,13 @@ import Welcome
 
 while True:
 
-    Welcome.welcome()
-
-    result = Welcome.gamemode()
-
-    Welcome.howabout()
-
     current_game = game()
+    
+    current_game.welcome()
+    
+    current_game.gamemode()
+    
+    current_game.howabout()
 
     current_game.settoken()
 
