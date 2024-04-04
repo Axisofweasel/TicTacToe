@@ -1,5 +1,7 @@
-from time import sleep
+
 from collections import Counter
+from random import choice
+from time import sleep
 
 
 class game():
@@ -13,6 +15,54 @@ class game():
         self.gameList = [1,2,3,4,5,6,7,8,9]
         self.whoMove = 'A'
         self.winList = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6],[0,3,6],[1,4,7],[2,5,8]]
+
+    def welcome(self):
+        print(r"""
+          ________________   _________   ______   __________  ______
+         /_  __/  _/ ____/  /_  __/   | / ____/  /_  __/ __ \/ ____/
+          / /  / // /        / / / /| |/ /        / / / / / / __/   
+         / / _/ // /___     / / / ___ / /___     / / / /_/ / /___   
+        /_/ /___/\____/    /_/ /_/  |_\____/    /_/  \____/_____/   
+
+                                                                """)
+        sleep(3)
+        return
+
+    def gamemode(self):
+        """Gets input for game mode
+
+        Raises:
+            ValueError: returns error if the input isn't 1 or 2
+        """
+        
+        print("Please choose a game mode")
+        print("1 <- Play against human")
+        print("2 <- Play against the machine")
+        while True:
+            try:
+                self.gametype = int(input('->'))
+                if self.gametype not in [1,2]:
+                    raise ValueError
+            except ValueError:
+                print('Incorrect Selection, please select 1 or 2')
+            else:
+                break
+        return
+        
+    def howabout(self):
+        """ Just some good old quotes
+        """
+        hold = ''' 
+        ...Wouldn't you prefer a good game of chess?... 
+        '''
+        response = '''
+        ...How about global thermonuclear war...'''
+        print(response)
+        sleep(1)
+        print(hold)
+        sleep(1)
+
+        return
 
     def createGrid(self):
         """Takes the gameList and creates a TicTacToe board from current positions and inputs
@@ -58,15 +108,27 @@ class game():
         return
             
             
+    def wopr(self):
+        gameList = self.gameList
+        
+        remaining_play = [i for i in gameList if isinstance(i, int)]
+        move = int(choice(remaining_play))
+        return move
+        
+        
+            
     def move(self):
-        whoMove = self.whoMove
+        gametype = self.gametype
         gamelist = self.gameList
         PlayerAToken = self.PlayerAToken
         PlayerBToken = self.PlayerBToken
         while True:
             try:
-                print(f"Player {self.whoMove}: Select your move")
-                playermove = int(input("->"))
+                if gametype == 2 and self.whoMove == 'B':
+                    playermove = game.wopr(self)
+                else:
+                    print(f"Player {self.whoMove}: Select your move")
+                    playermove = int(input("->"))
                 if playermove < 1 or playermove > 9:
                     raise ValueError("Please submit valid move between 1 - 9")
             except ValueError as e:
@@ -136,7 +198,7 @@ class game():
         print('Would you like to play another game? Y/N')
         while True:
             try:
-                playOn = str(input('->'))
+                playOn = str(input('->')).upper()
                 if playOn not in ['Y', 'N']:
                     raise ValueError('Please only return Y or N')
             except ValueError as e:
