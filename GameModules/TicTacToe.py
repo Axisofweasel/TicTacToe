@@ -17,6 +17,9 @@ class game():
         self.winList = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6],[0,3,6],[1,4,7],[2,5,8]]
 
     def welcome(self):
+        """
+        Print out some ASCII art for landing page
+        """        
         print(r"""
           ________________   _________   ______   __________  ______
          /_  __/  _/ ____/  /_  __/   | / ____/  /_  __/ __ \/ ____/
@@ -65,8 +68,9 @@ class game():
         return
 
     def createGrid(self):
-        """Takes the gameList and creates a TicTacToe board from current positions and inputs
         """
+        Create and display game grid with current moves
+        """        
         g = self.gameList
         print(rf"""
             {g[0]}|{g[1]}|{g[2]}
@@ -109,6 +113,11 @@ class game():
             
             
     def wopr(self):
+        """Function for computer based play. Returns winning move if one exists else returns a random move from remaining moves.
+
+        Returns:
+            Integer: Winning move or random move from remaining play list.
+        """        
         gameList = self.gameList
         playerBToken = self.PlayerBToken
         playerAToken =self.PlayerAToken
@@ -134,6 +143,15 @@ class game():
         
             
     def move(self):
+        """Takes input from users if in 2 player mode and validates as integer and in remaining play list. If in 1 player mode it calls WOPR function.
+           Calls status function to check if game is win, draw or continuing.
+           Displays gamegrid with all current moves.
+           Set next play variable to next player
+
+        Raises:
+            ValueError: Checks user input is a valid integer move within the game grid.
+            ValueError: Checks user has returned a move that has not already been played.
+        """        
         gametype = self.gametype
         gamelist = self.gameList
         PlayerAToken = self.PlayerAToken
@@ -173,13 +191,29 @@ class game():
         return
     
     def status(self):
+        """Check whether game should be ended or continued.
 
+        Returns:
+            Integer: 1 - Player A Win
+                     2 - Player B Win
+                     3 - Draw
+                     4 - Continue Playing
+        """        
         gameList = self.gameList
         winList = self.winList
         playerAToken = self.PlayerAToken
         playerBToken = self.PlayerBToken
         
         def wincheck(token):
+            """_summary_
+
+            Args:
+                token (Str): X or O as current move token
+
+            Returns:
+                Integer: 1 - WIn
+                         0 - Lose
+            """            
             token = token
             score = [i for i, j in enumerate(gameList) if str(j) == str(token)]
             for x in winList:
@@ -204,7 +238,9 @@ class game():
         return
         
     def gameResults(self):
-        
+        """
+        Prints out the outcome based on status function output
+        """        
         outcomes = {
             1 : 'Player A has won the game',
             2 : 'Player B has won the game',
@@ -215,7 +251,14 @@ class game():
         return
     
     def continuePlay(self):
-        
+        """Checks whether user would like to continue playing
+
+        Raises:
+            ValueError: Validates that user input is only Y or N
+
+        Returns:
+            playOn: Y or N 
+        """        
         playOn = self.playOn
         
         print('Would you like to play another game? Y/N')

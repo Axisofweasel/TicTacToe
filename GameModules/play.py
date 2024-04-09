@@ -1,5 +1,4 @@
 from TicTacToe import game
-import Welcome
 
 
 while True:
