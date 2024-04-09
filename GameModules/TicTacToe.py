@@ -110,9 +110,25 @@ class game():
             
     def wopr(self):
         gameList = self.gameList
+        playerBToken = self.PlayerBToken
+        playerAToken =self.PlayerAToken
+        winList = self.winList
         
-        remaining_play = [i for i in gameList if isinstance(i, int)]
-        move = int(choice(remaining_play))
+        remaining_play= [i for i,j in enumerate(gameList) if isinstance(j, int)]
+        token_position = [i for i, j in enumerate(gameList) if j == playerBToken and j != playerAToken]
+
+        for score_list in winList:
+            x = set(score_list).intersection(set(token_position))
+            if len(x) == 2:
+                movelist = list(set(score_list) - set(x))
+                if movelist[0] in remaining_play:
+                    move = movelist[0]+1
+                    break
+                else:
+                    move = int(choice(remaining_play))+1
+            else:
+                move = int(choice(remaining_play))+1
+        
         return move
         
         
@@ -123,25 +139,32 @@ class game():
         PlayerAToken = self.PlayerAToken
         PlayerBToken = self.PlayerBToken
         while True:
-            try:
-                if gametype == 2 and self.whoMove == 'B':
-                    playermove = game.wopr(self)
+            while True:
+                try:
+                    if gametype == 2 and self.whoMove == 'B':
+                        playermove = int(game.wopr(self))
+                    else:
+                        print(f"Player {self.whoMove}: Select your move")
+                        playermove = int(input("->"))
+                    if playermove < 1 or playermove > 9:
+                        raise ValueError("Please submit valid move between 1 - 9")
+                except ValueError as e:
+                    print(e)
                 else:
-                    print(f"Player {self.whoMove}: Select your move")
-                    playermove = int(input("->"))
-                if playermove < 1 or playermove > 9:
-                    raise ValueError("Please submit valid move between 1 - 9")
-            except ValueError as e:
-                print(e)
-            else:
-                if gamelist[playermove - 1] != playermove:
-                    print("Someone already has a token here. Try again")
-                if self.whoMove == 'A':
-                    gamelist[playermove - 1] = PlayerAToken
-                    self.whoMove = 'B'
-                else:
-                    gamelist[playermove - 1] = PlayerBToken
-                    self.whoMove = 'A'
+                    try:
+                        if gamelist[playermove - 1] != playermove:
+                            raise ValueError("Someone already has a token here. Try again")
+                    except ValueError as f:
+                        print(f)
+                    else:
+                        if self.whoMove == 'A':
+                            gamelist[playermove - 1] = PlayerAToken
+                            self.whoMove = 'B'
+                            break
+                        else:
+                            gamelist[playermove - 1] = PlayerBToken
+                            self.whoMove = 'A'
+                            break
             game.status(self)
             game.createGrid(self)
             if self.gameStatus != 4:
@@ -160,7 +183,7 @@ class game():
             token = token
             score = [i for i, j in enumerate(gameList) if str(j) == str(token)]
             for x in winList:
-                if Counter(x) == Counter(score):
+                if set(x).issubset(score):
                     return 1
             return 0
         
